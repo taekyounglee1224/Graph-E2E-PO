@@ -57,6 +57,52 @@ class DifferentiableGMV(nn.Module):
         return w_star.float()   # cvxpylayers returns float64; cast back to float32
 
 
+class MLPRiskEncoder(nn.Module):
+    """
+    2-layer MLP. No message passing — processes each asset independently.
+    RQ3 ablation baseline: same pipeline as GNNRiskEncoder but without graph structure.
+    Output H in R^{N x d_latent}: latent factor matrix (identical shape).
+    """
+    def __init__(self, d_in: int, d_hidden: int, d_latent: int):
+        super().__init__()
+        self.fc1 = nn.Linear(d_in, d_hidden)
+        self.bn1 = nn.BatchNorm1d(d_hidden)
+        self.fc2 = nn.Linear(d_hidden, d_latent)
+
+    def forward(self, x, edge_index=None, edge_weight=None):
+        h = self.fc1(x)
+        h = self.bn1(F.relu(h))
+        h = self.fc2(h)
+        h = F.normalize(h, p=2, dim=1)
+        return h   # (N, d_latent)
+
+
+class MLPGMVModel(nn.Module):
+    """
+    RQ3 ablation baseline: E2E GMV without graph structure.
+      X_t  →  MLP  →  H_t  →  w*
+
+    edge_index / edge_weight are accepted but ignored, keeping the same
+    call signature as GraphGMVModel for drop-in compatibility.
+    Sigma_t = H_t H_t^T + eps I is implicit inside the optimization objective.
+    """
+    def __init__(self, n_assets: int, d_in: int = 7,
+                 d_hidden: int = 32, d_latent: int = 16, epsilon: float = 1e-4):
+        super().__init__()
+        self.epsilon = epsilon
+        self.mlp     = MLPRiskEncoder(d_in, d_hidden, d_latent)
+        self.gmv     = DifferentiableGMV(n_assets, d_latent, epsilon)
+
+    def forward(self, x, edge_index=None, edge_weight=None):
+        H      = self.mlp(x)    # (N, d_latent) — graph inputs ignored
+        w_star = self.gmv(H)    # (N,)
+        return w_star, H
+
+    def compute_sigma(self, H):
+        N = H.shape[0]
+        return H @ H.T + self.epsilon * torch.eye(N, device=H.device)
+
+
 class GraphGMVModel(nn.Module):
     """
     End-to-end pipeline:

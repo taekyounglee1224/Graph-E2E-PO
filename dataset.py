@@ -7,7 +7,7 @@ from scipy import stats
 
 def compute_node_features(window: np.ndarray) -> np.ndarray:
     """
-    window  : (T, N) return matrix for the lookback period
+    window  : (T, N) return matrix for the lookback period  [variable T ok]
     returns : (N, 7) standardized feature matrix
 
     Features per asset:
@@ -66,20 +66,21 @@ class PortfolioDataset(Dataset):
     """
     Pre-computes all samples upfront for fast training.
 
-    Each sample corresponds to a rebalancing date t:
-      window [t - lookback : t]       ->  x, edge_index, edge_weight, sigma_sample
-      returns[t : t + holding_period] ->  r_next (compounded holding-period return)
+    sample_indices : list of (lb_start, t, h_end) integer position tuples
+      window = returns_arr[lb_start : t]    → x, edge_index, edge_weight, sigma_sample
+               (variable length ≈ lookback_years 거래일)
+      r_next = prod(1 + returns_arr[t : h_end], axis=0) - 1
+               (variable length ≈ horizon_months 거래일)
 
-    holding_period matches rebalance_freq so the loss reflects the actual
-    return earned over the full holding period, not just one day.
+    캘린더 기반으로 생성된 인덱스를 받으므로 lookback/horizon 길이가
+    샘플마다 수 거래일 내에서 달라질 수 있음 (완전히 허용).
     """
-    def __init__(self, returns_arr: np.ndarray, indices, lookback: int,
-                 holding_period: int = 1, corr_threshold: float = 0.3):
+    def __init__(self, returns_arr: np.ndarray, sample_indices: list,
+                 corr_threshold: float = 0.3):
         self.samples = []
-        for t in indices:
-            window       = returns_arr[t - lookback : t]
-            # Compound returns over the holding period: (1+r1)(1+r2)...(1+rT) - 1
-            r_next       = np.prod(1 + returns_arr[t : t + holding_period], axis=0) - 1
+        for (lb_start, t, h_end) in sample_indices:
+            window       = returns_arr[lb_start : t]
+            r_next       = np.prod(1 + returns_arr[t : h_end], axis=0) - 1
 
             x            = compute_node_features(window)
             adj          = compute_adjacency(window, threshold=corr_threshold)

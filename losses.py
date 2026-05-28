@@ -14,19 +14,21 @@ def loss_variance(w_star, r_next, sigma_sample):
     return w_star @ sigma_sample @ w_star
 
 
-def loss_sharpe(w_star, r_next, sigma_sample, eps: float = 1e-8):
+def loss_mean_variance(w_star, r_next, sigma_sample, lam: float = 1.0):
     """
-    L2: Negative realized Sharpe ratio.
+    L2: Mean-Variance (Markowitz) loss.
 
-    L2 = - (w*^T r) / sqrt(w*^T Sigma_sample w* + eps)
+    L2 = w*^T Sigma_sample w* - lambda * w*^T r
 
-    Consistent with GMV: GMV minimizes the denominator (portfolio vol),
-    so penalizing -Sharpe aligns the optimization direction while also
-    rewarding return — without discarding risk awareness.
+    lambda controls the risk-return trade-off:
+      lambda=0  → pure variance (= L1)
+      lambda>0  → penalize variance, reward return
 
-    grad = -r/sigma_p + (w*^T r / sigma_p^3) * Sigma_sample @ w*
+    Advantages over negative Sharpe:
+      - No division → stable gradients (no exploding grad from small vol)
+      - Linear in r → less prone to overfitting on return direction
+      - lambda is an explicit, interpretable hyperparameter
     """
-    ret   = w_star @ r_next
     var_p = w_star @ sigma_sample @ w_star
-    vol_p = torch.sqrt(var_p + eps)
-    return -ret / vol_p
+    ret   = w_star @ r_next
+    return var_p - lam * ret

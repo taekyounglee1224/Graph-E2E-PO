@@ -1,0 +1,16 @@
+RQ,Model A,Model B,Metric,t-stat,p-value,sig
+RQ1,Graph-L1,SampleGMV,Ann. Return,9.3503,0.0,***
+RQ1,Graph-L1,SampleGMV,Ann. Vol,76.29,0.0,***
+RQ1,Graph-L1,SampleGMV,Sharpe,-15.2616,0.0,***
+RQ1,Graph-L1,SampleGMV,Max DD,-196.1247,0.0,***
+RQ1,Graph-L1,SampleGMV,Calmar,-24.6962,0.0,***
+RQ2,Graph-L1,Graph-L2,Ann. Return,4.5774,0.0001,***
+RQ2,Graph-L1,Graph-L2,Ann. Vol,1.988,0.0563,
+RQ2,Graph-L1,Graph-L2,Sharpe,4.0071,0.0004,***
+RQ2,Graph-L1,Graph-L2,Max DD,2.0835,0.0461,*
+RQ2,Graph-L1,Graph-L2,Calmar,4.595,0.0001,***
+RQ3,Graph-L1,MLP-L1,Ann. Return,14.9839,0.0,***
+RQ3,Graph-L1,MLP-L1,Ann. Vol,62.8114,0.0,***
+RQ3,Graph-L1,MLP-L1,Sharpe,0.3688,0.7149,
+RQ3,Graph-L1,MLP-L1,Max DD,-38.6146,0.0,***
+RQ3,Graph-L1,MLP-L1,Calmar,-3.3844,0.0021,**

@@ -1,16 +1,49 @@
-RQ,Model A,Model B,Metric,t-stat,p-value,sig
-RQ1,Graph-L1,SampleGMV,Ann. Return,9.3503,0.0,***
-RQ1,Graph-L1,SampleGMV,Ann. Vol,76.29,0.0,***
-RQ1,Graph-L1,SampleGMV,Sharpe,-15.2616,0.0,***
-RQ1,Graph-L1,SampleGMV,Max DD,-196.1247,0.0,***
-RQ1,Graph-L1,SampleGMV,Calmar,-24.6962,0.0,***
-RQ2,Graph-L1,Graph-L2,Ann. Return,4.5774,0.0001,***
-RQ2,Graph-L1,Graph-L2,Ann. Vol,1.988,0.0563,
-RQ2,Graph-L1,Graph-L2,Sharpe,4.0071,0.0004,***
-RQ2,Graph-L1,Graph-L2,Max DD,2.0835,0.0461,*
-RQ2,Graph-L1,Graph-L2,Calmar,4.595,0.0001,***
-RQ3,Graph-L1,MLP-L1,Ann. Return,14.9839,0.0,***
-RQ3,Graph-L1,MLP-L1,Ann. Vol,62.8114,0.0,***
-RQ3,Graph-L1,MLP-L1,Sharpe,0.3688,0.7149,
-RQ3,Graph-L1,MLP-L1,Max DD,-38.6146,0.0,***
-RQ3,Graph-L1,MLP-L1,Calmar,-3.3844,0.0021,**
+Layer,Pair,Model A,Model B,Metric,Direction,t-stat,p-value,sig
+Layer 1,L1-1  Graph-L1 vs EW,Graph-L1,EW,Ann. Return,greater,30.0807,0.0,***
+Layer 1,L1-1  Graph-L1 vs EW,Graph-L1,EW,Ann. Vol,less,60.3956,1.0,
+Layer 1,L1-1  Graph-L1 vs EW,Graph-L1,EW,Sharpe,greater,7.6604,0.0,***
+Layer 1,L1-1  Graph-L1 vs EW,Graph-L1,EW,Sortino,greater,11.835,0.0,***
+Layer 1,L1-1  Graph-L1 vs EW,Graph-L1,EW,Max DD,greater,-14.5073,1.0,
+Layer 1,L1-1  Graph-L1 vs EW,Graph-L1,EW,CVaR,less,18.1788,1.0,
+Layer 1,L1-2  Graph-L1 vs SampleGMV,Graph-L1,SampleGMV,Ann. Return,greater,46.6966,0.0,***
+Layer 1,L1-2  Graph-L1 vs SampleGMV,Graph-L1,SampleGMV,Ann. Vol,less,86.799,1.0,
+Layer 1,L1-2  Graph-L1 vs SampleGMV,Graph-L1,SampleGMV,Sharpe,greater,19.2393,0.0,***
+Layer 1,L1-2  Graph-L1 vs SampleGMV,Graph-L1,SampleGMV,Sortino,greater,21.8697,0.0,***
+Layer 1,L1-2  Graph-L1 vs SampleGMV,Graph-L1,SampleGMV,Max DD,greater,-17.4801,1.0,
+Layer 1,L1-2  Graph-L1 vs SampleGMV,Graph-L1,SampleGMV,CVaR,less,32.9124,1.0,
+Layer 1,L1-3  Graph-L2 vs EW,Graph-L2,EW,Ann. Return,greater,14.2703,0.0,***
+Layer 1,L1-3  Graph-L2 vs EW,Graph-L2,EW,Ann. Vol,less,56.4333,1.0,
+Layer 1,L1-3  Graph-L2 vs EW,Graph-L2,EW,Sharpe,greater,-0.1367,0.5541,
+Layer 1,L1-3  Graph-L2 vs EW,Graph-L2,EW,Sortino,greater,3.4061,0.0007,***
+Layer 1,L1-3  Graph-L2 vs EW,Graph-L2,EW,Max DD,greater,-14.3213,1.0,
+Layer 1,L1-3  Graph-L2 vs EW,Graph-L2,EW,CVaR,less,16.5077,1.0,
+Layer 1,L1-4  Graph-L2 vs SampleGMV,Graph-L2,SampleGMV,Ann. Return,greater,26.1236,0.0,***
+Layer 1,L1-4  Graph-L2 vs SampleGMV,Graph-L2,SampleGMV,Ann. Vol,less,82.9701,1.0,
+Layer 1,L1-4  Graph-L2 vs SampleGMV,Graph-L2,SampleGMV,Sharpe,greater,8.4155,0.0,***
+Layer 1,L1-4  Graph-L2 vs SampleGMV,Graph-L2,SampleGMV,Sortino,greater,11.2772,0.0,***
+Layer 1,L1-4  Graph-L2 vs SampleGMV,Graph-L2,SampleGMV,Max DD,greater,-16.3422,1.0,
+Layer 1,L1-4  Graph-L2 vs SampleGMV,Graph-L2,SampleGMV,CVaR,less,29.8736,1.0,
+Layer 2,RQ2a  Graph: L1 vs L2,Graph-L1,Graph-L2,Ann. Return,greater,5.6737,0.0,***
+Layer 2,RQ2a  Graph: L1 vs L2,Graph-L1,Graph-L2,Ann. Vol,less,3.0004,0.9979,
+Layer 2,RQ2a  Graph: L1 vs L2,Graph-L1,Graph-L2,Sharpe,greater,4.7408,0.0,***
+Layer 2,RQ2a  Graph: L1 vs L2,Graph-L1,Graph-L2,Sortino,greater,4.6185,0.0,***
+Layer 2,RQ2a  Graph: L1 vs L2,Graph-L1,Graph-L2,Max DD,greater,3.9211,0.0001,***
+Layer 2,RQ2a  Graph: L1 vs L2,Graph-L1,Graph-L2,CVaR,less,-0.0129,0.4949,
+Layer 2,RQ2b  MLP:   L1 vs L2,MLP-L1,MLP-L2,Ann. Return,greater,-18.3148,1.0,
+Layer 2,RQ2b  MLP:   L1 vs L2,MLP-L1,MLP-L2,Ann. Vol,less,-33.6576,0.0,***
+Layer 2,RQ2b  MLP:   L1 vs L2,MLP-L1,MLP-L2,Sharpe,greater,-8.0367,1.0,
+Layer 2,RQ2b  MLP:   L1 vs L2,MLP-L1,MLP-L2,Sortino,greater,-8.1644,1.0,
+Layer 2,RQ2b  MLP:   L1 vs L2,MLP-L1,MLP-L2,Max DD,greater,13.4057,0.0,***
+Layer 2,RQ2b  MLP:   L1 vs L2,MLP-L1,MLP-L2,CVaR,less,-19.983,0.0,***
+Layer 2,RQ3a  L1:    Graph vs MLP,Graph-L1,MLP-L1,Ann. Return,greater,46.9928,0.0,***
+Layer 2,RQ3a  L1:    Graph vs MLP,Graph-L1,MLP-L1,Ann. Vol,less,94.9861,1.0,
+Layer 2,RQ3a  L1:    Graph vs MLP,Graph-L1,MLP-L1,Sharpe,greater,19.6605,0.0,***
+Layer 2,RQ3a  L1:    Graph vs MLP,Graph-L1,MLP-L1,Sortino,greater,20.4342,0.0,***
+Layer 2,RQ3a  L1:    Graph vs MLP,Graph-L1,MLP-L1,Max DD,greater,-18.6032,1.0,
+Layer 2,RQ3a  L1:    Graph vs MLP,Graph-L1,MLP-L1,CVaR,less,35.189,1.0,
+Layer 2,RQ3b  L2:    Graph vs MLP,Graph-L2,MLP-L2,Ann. Return,greater,7.1251,0.0,***
+Layer 2,RQ3b  L2:    Graph vs MLP,Graph-L2,MLP-L2,Ann. Vol,less,14.0399,1.0,
+Layer 2,RQ3b  L2:    Graph vs MLP,Graph-L2,MLP-L2,Sharpe,greater,1.6627,0.0514,
+Layer 2,RQ3b  L2:    Graph vs MLP,Graph-L2,MLP-L2,Sortino,greater,2.2826,0.0134,*
+Layer 2,RQ3b  L2:    Graph vs MLP,Graph-L2,MLP-L2,Max DD,greater,-8.7062,1.0,
+Layer 2,RQ3b  L2:    Graph vs MLP,Graph-L2,MLP-L2,CVaR,less,4.9086,1.0,

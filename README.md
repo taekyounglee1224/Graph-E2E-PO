@@ -203,4 +203,4 @@ Key parameters in `experiment.ipynb` → `CFG`:
 | Sharpe | Ann. Return / Ann. Vol |
 | Sortino | Ann. Return / Downside Dev. $\times \sqrt{12}$ |
 | Max DD | $\min_t \frac{\text{cum}(t) - \text{peak}(t)}{\text{peak}(t)}$ |
-| CVaR (95%) | $-\mathbb{E}[r_p \mid r_p \leq \text{VaR}_{5\%}]$ | 
+| CVaR (95%) | $-\mathbb{E}[r_p \mid r_p \leq \text{VaR}_{0.05}]$ | 
